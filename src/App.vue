@@ -1,28 +1,54 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <PostsPageFunctions
+            v-if="functional"
+            :id="currentUser"
+        />
+        <PostsPageOptions
+            v-else
+            :id="currentUser"
+        />
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import PostsPageOptions from '@/components/PostsPageOptions'
+import PostsPageFunctions from '@/components/PostsPageFunctions'
 
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
+    name: 'app',
+    components: {
+        PostsPageOptions,
+        PostsPageFunctions
+    },
+    data() {
+        return {
+            currentUser: 1,
+            functional: false
+        }
+    }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
+
+body {
+    font-family: 'Varela Round', Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 40px 0;
+    color: #555;
+    background: #f6f5f8;
+}
+h1,
+h2,
+h3 {
+    color: #333;
+}
+.container {
+    max-width: 40em;
+    padding: 0 1.5rem;
+    margin: 0 auto;
 }
 </style>
