@@ -1,5 +1,7 @@
 # vue-functional
 
+Live: [https://enkot.github.io/vue-function-api-test/](https://enkot.github.io/vue-function-api-test/).
+
 ## Project setup
 ```
 npm install
