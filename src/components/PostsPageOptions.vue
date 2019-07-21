@@ -29,23 +29,10 @@
 </template>
 
 <script>
-import { fetchUserPosts } from '@/api'
-
-export default {
-    props: {
-        id: Number
-    },
+const scrollMixin = {
     data() {
         return {
-            isLoading: true,
-            pageOffset: 0,
-            posts: []
-        }
-    },
-    watch: {
-        id: {
-            handler: 'fetch',
-            immediate: true
+            pageOffset: 0
         }
     },
     mounted() {
@@ -55,19 +42,19 @@ export default {
         window.removeEventListener('scroll', this.update)
     },
     methods: {
-        async fetch() {
-            this.isLoading = true
-            this.posts = await fetchUserPosts(this.id)
-            this.isLoading = false
-        },
         update() {
             this.pageOffset = window.pageYOffset
         }
-    },
-    computed: {
-        count() {
-            return this.posts.length
-        }
+    }
+}
+
+export default {
+    mixins: [scrollMixin],
+    props: {
+        id: Number,
+        isLoading: Boolean,
+        posts: Array,
+        count: Number
     }
 }
 </script>

@@ -50,7 +50,7 @@ function useScroll() {
     return { pageOffset }
 }
 
-function useUserPostsFetch(props) {
+function useFetchPosts(props) {
     const isLoading = value(false)
     const posts = value([])
 
@@ -71,7 +71,7 @@ export default {
         id: Number
     },
     setup(props) {
-        const { isLoading, posts } = useUserPostsFetch(props)
+        const { isLoading, posts } = useFetchPosts(props)
         const count = computed(() => posts.value.length)
 
         return {

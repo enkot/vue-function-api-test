@@ -12,19 +12,59 @@
 </template>
 
 <script>
+import { fetchUserPosts } from '@/api'
+
 import PostsPageOptions from '@/components/PostsPageOptions'
 import PostsPageFunctions from '@/components/PostsPageFunctions'
+
+const withPostsHOC = WrappedComponent => ({
+    props: WrappedComponent.props,
+    data() {
+        return {
+            postsIsLoading: false,
+            fetchedPosts: []
+        }
+    },
+    watch: {
+        id: {
+            handler: 'fetchPosts',
+            immediate: true
+        }
+    },
+    methods: {
+        async fetchPosts() {
+            this.postsIsLoading = true
+            this.fetchedPosts = await fetchUserPosts(this.id)
+            this.postsIsLoading = false
+        }
+    },
+    computed: {
+        postsCount() {
+            return this.fetchedPosts.length
+        }
+    },
+    render(h) {
+        return h(WrappedComponent, {
+            props: {
+                ...this.$props,
+                isLoading: this.postsIsLoading,
+                posts: this.fetchedPosts,
+                count: this.postsCount
+            }
+        })
+    }
+})
 
 export default {
     name: 'app',
     components: {
-        PostsPageOptions,
+        PostsPageOptions: withPostsHOC(PostsPageOptions),
         PostsPageFunctions
     },
     data() {
         return {
             currentUser: 1,
-            functional: false
+            functional: true
         }
     }
 }
